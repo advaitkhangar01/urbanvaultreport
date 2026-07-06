@@ -5,39 +5,46 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Urban Vault — Property Purchase & ROI Ledger (Chirag Gandecha)</title>
   <link rel="shortcut icon" type="image/png" href="./logo.png">
-  <!-- Typography (Google Fonts) -->
+  
+  <!-- Premium Fonts (Outfit for headings/body, DM Mono for numbers) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
   
-  <!-- Iconography & Chart.js CDNs -->
+  <!-- Lucide Icons & Chart.js -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     /* ==========================================
-       LUXURY DESIGN SYSTEM VARIABLES
+       BLACKROCK INSTITUTIONAL DESIGN SYSTEM
        ========================================== */
     :root {
-      --primary: #061D19;        /* Rich Deep Forest Emerald */
-      --accent: #A68B5E;         /* Warm Muted Luxury Gold/Brass */
-      --bg-page: #FAF9F6;        /* Alabaster Cream Page Background */
-      --bg-card: #FFFFFF;        /* Solid Pure White */
-      --border: #EAE5DA;         /* Warm Hairline Gold/Gray Border */
-      --text-main: #1E293B;      /* Slate 800 Primary Text */
-      --text-muted: #475569;     /* Slate 600 Body Text */
-      --text-light: #94A3B8;     /* Slate 400 Labels & Captions */
+      --primary: #0f172a;        /* Deep Slate Blue */
+      --secondary: #1e3a8a;      /* Corporate Blue */
+      --accent: #9f8252;         /* Institutional Champagne/Gold */
+      --bg-page: #f1f5f9;        /* Neutral Slate Grey backdrop */
+      --bg-canvas: #ffffff;      /* Pure White Report Canvas */
+      --bg-card: #ffffff;
+      --border-thin: #e2e8f0;    /* Hairline borders */
+      --border-dark: #cbd5e1;
       
-      --success: #15803D;        /* Forest Green */
-      --success-bg: #DCFCE7;
-      --warning: #B45309;        /* Warm Amber */
-      --warning-bg: #FEF3C7;
-      --info: #1E3A8A;           /* Deep Blue */
-      --info-bg: #DBEAFE;
+      --text-main: #0f172a;      /* High contrast black */
+      --text-muted: #334155;     /* Dark gray */
+      --text-light: #64748b;     /* Steel gray labels */
       
-      --font-serif: 'Cormorant Garamond', serif;
-      --font-sans: 'Plus Jakarta Sans', sans-serif;
-      --font-mono: 'Roboto Mono', monospace;
+      --success: #047857;        /* Institutional Emerald */
+      --success-bg: #ecfdf5;     /* Soft Green Tint */
+      --success-dark: #065f46;
+      --warning: #c2410c;        /* Warning Rust/Amber */
+      --warning-bg: #fff7ed;     /* Soft Orange Tint */
+      --info: #1d4ed8;           /* Financial Blue */
+      --info-bg: #eff6ff;
+      
+      --font-sans: 'Outfit', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+      --r: 6px;                  /* Flat institutional corners */
+      --transition: all 0.15s ease-in-out;
     }
 
     * {
@@ -50,35 +57,55 @@
       background-color: var(--bg-page);
       color: var(--text-main);
       font-family: var(--font-sans);
-      line-height: 1.45;
+      line-height: 1.5;
       font-size: 12.5px;
       -webkit-font-smoothing: antialiased;
+      padding: 20px 6px; /* Perfect 6px horizontal margin gaps on the screen */
+    }
+
+    /* Print styles to output as continuous document */
+    @media print {
+      body {
+        background-color: #ffffff;
+        padding: 0;
+        margin: 0;
+      }
+      .report-canvas {
+        border: none;
+        box-shadow: none;
+        padding: 10mm;
+        width: 100%;
+        max-width: 100%;
+      }
     }
 
     /* ==========================================
-       CONTINUOUS CANVAS CONTAINER
+       SPACIOUS CONTINUOUS CANVAS LAYOUT
        ========================================== */
     .report-canvas {
-      max-width: 1080px;
-      margin: 10px auto;
-      padding: 0 10px;
+      width: 100%;
+      max-width: 1140px; /* Spacious width for tables */
+      margin: 0 auto;
+      background-color: var(--bg-canvas);
+      border: 1px solid var(--border-dark);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+      padding: 24px 15px; /* Compact padding to preserve space */
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 20px;
+      box-sizing: border-box;
     }
 
     /* ==========================================
-       UNIFIED HEADER BAR
+       HEADER & FOOTER
        ========================================== */
     .brand-header {
-      background-color: var(--primary);
-      color: #FFFFFF;
-      border-radius: 5px;
-      padding: 12px 18px;
+      border-bottom: 2.5px solid var(--primary);
+      padding-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 4px 12px rgba(6, 29, 25, 0.04);
+      flex-shrink: 0;
     }
     .brand-logo-container {
       display: flex;
@@ -86,18 +113,16 @@
       gap: 10px;
     }
     .brand-logo-img {
-      height: 26px;
+      height: 28px;
       width: auto;
       display: block;
-      filter: brightness(0) invert(1);
     }
     .brand-logo-text {
-      font-family: var(--font-sans);
-      font-weight: 700;
-      font-size: 16px;
-      letter-spacing: 0.2em;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: #FFFFFF;
+      color: var(--primary);
     }
     .brand-logo-text span {
       color: var(--accent);
@@ -106,229 +131,213 @@
     .header-meta {
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 14px;
       font-size: 9.5px;
       font-family: var(--font-mono);
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      opacity: 0.85;
     }
     .header-meta span strong {
-      color: var(--accent);
+      color: var(--secondary);
+      font-weight: 700;
+    }
+    .node-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--success);
+      font-weight: 700;
+    }
+    .node-pulse {
+      width: 6px;
+      height: 6px;
+      background-color: var(--success);
+      border-radius: 50%;
     }
 
     /* ==========================================
-       HERO COVER DASHBOARD
+       HERO COVER DASHBOARD (REDESIGNED LIGHT THEME)
        ========================================== */
     .hero-dashboard {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 18px 20px;
+      background-color: #f8fafc;
+      border: 1px solid var(--border-thin);
+      border-top: 4px solid var(--primary); /* Deep Slate header strip */
+      border-radius: var(--r);
+      padding: 20px 24px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-dashboard::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 100px;
-      height: 100px;
-      background: radial-gradient(circle, rgba(166,139,94,0.05) 0%, transparent 70%);
-      pointer-events: none;
+      gap: 16px;
+      color: var(--text-main);
+      flex-shrink: 0;
     }
     .hero-title-section {
-      border-left: 2px solid var(--accent);
+      border-left: 3px solid var(--accent);
       padding-left: 12px;
     }
     .hero-category {
       font-family: var(--font-mono);
-      font-size: 8.5px;
+      font-size: 9px;
       font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.15em;
     }
     .hero-title {
-      font-family: var(--font-serif);
       font-size: 22px;
-      font-weight: 600;
+      font-weight: 800;
+      line-height: 1.2;
       color: var(--primary);
-      line-height: 1.15;
+      letter-spacing: -0.01em;
       margin-top: 2px;
     }
     .hero-subtitle {
-      font-size: 11px;
-      color: var(--text-muted);
+      font-size: 12px;
+      color: var(--text-light);
       margin-top: 2px;
     }
-
-    /* ==========================================
-       METRICS RIBBON (EXECUTIVE STRIP)
-       ========================================== */
-    .metrics-ribbon {
-      display: grid;
-      grid-template-columns: 1.1fr repeat(4, 1fr);
-      border-top: 1px solid var(--border);
-      padding-top: 12px;
-      gap: 12px;
+    .hero-subtitle strong {
+      color: var(--primary);
     }
+
+     /* Metrics Ribbon inside Hero (Horizontal fit) */
+     .metrics-ribbon {
+       display: grid;
+       grid-template-columns: repeat(6, 1fr);
+       border-top: 1px solid var(--border-thin);
+       padding-top: 14px;
+       gap: 15px;
+     }
     .ribbon-kpi-card {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
+      padding-right: 10px;
     }
-    .ribbon-kpi-card.hero-kpi {
-      border-right: 1.5px solid var(--border);
-      padding-right: 12px;
+    .ribbon-kpi-card:not(:last-child) {
+      border-right: 1px solid var(--border-thin);
     }
     .ribbon-label {
       font-size: 8.5px;
       font-weight: 700;
       color: var(--text-light);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
     }
     .ribbon-label svg {
-      width: 10px;
-      height: 10px;
-      color: var(--accent);
+      width: 12px;
+      height: 12px;
+      color: var(--secondary);
     }
     .ribbon-value {
       font-family: var(--font-mono);
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: var(--primary);
     }
     .ribbon-value.highlight-val {
-      font-size: 22px;
-      color: var(--primary);
+      font-size: 20px;
+      color: var(--success); /* Green ROI value */
       line-height: 1;
+      font-weight: 800;
+    }
+    .ribbon-value.highlight-gain {
+      color: var(--success); /* Green Gain value */
     }
     .ribbon-badge-sub {
-      font-size: 8px;
+      font-size: 8.5px;
       font-family: var(--font-mono);
-      color: var(--success);
+      color: var(--text-muted);
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
     }
 
     /* ==========================================
-       MAIN CONTENT COLUMNS
+       GLOBAL DENSE GRID SYSTEM & CARDS
        ========================================== */
-    .main-grid {
+    .section-row {
       display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      margin-bottom: 4px;
     }
-
-    /* ==========================================
-       CARDS & DESIGN SYSTEMS
-       ========================================== */
-    .card {
-      background-color: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 12px 15px;
+    .section-row.split-55-45 {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+    .grid-global {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      align-items: start;
+      min-width: 0;
+    }
+    .flex-column {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
+      min-width: 0;
+    }
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.015);
+      box-sizing: border-box;
+      width: 100%;
+    }
+    .card.highlighted-border {
+      border-left: 3px solid var(--accent);
+      background: #fafaf9;
     }
     .card-title {
-      font-size: 9px;
-      font-weight: 700;
-      color: var(--text-light);
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--secondary);
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      border-bottom: 1px solid #FAF9F6;
-      padding-bottom: 4px;
+      letter-spacing: 0.08em;
+      border-bottom: 1.5px solid var(--border-thin);
+      padding-bottom: 6px;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      flex-shrink: 0;
     }
     .card-title svg {
-      color: var(--accent);
-      width: 12px;
-      height: 12px;
+      width: 14px;
+      height: 14px;
+      color: var(--secondary);
     }
     .card-content-flow {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
 
     /* ==========================================
-       TABLES (COMPACT FINANCIAL DESIGN)
-       ========================================== */
-    .table-container {
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-    th {
-      background-color: #FAF9F6;
-      color: var(--primary);
-      font-size: 8.5px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 5px 8px;
-      border-bottom: 1px solid var(--border);
-    }
-    td {
-      padding: 5px 8px;
-      border-bottom: 1px solid var(--border);
-      color: var(--text-muted);
-      font-size: 10.5px;
-    }
-    tr:nth-child(even) td {
-      background-color: #FAFAFA;
-    }
-    tr:hover td {
-      background-color: #FAF9F6;
-    }
-    .font-numeric {
-      font-family: var(--font-mono);
-      font-variant-numeric: tabular-nums;
-    }
-    .text-right {
-      text-align: right;
-    }
-    .summary-row td {
-      font-weight: 700;
-      background-color: #F1F5F9 !important;
-      color: var(--primary);
-      border-top: 1px solid var(--border);
-    }
-
-    /* ==========================================
-       KEY VALUE ROWS
+       KEY VALUE LISTS & CHECKLISTS
        ========================================== */
     .key-value-list {
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 7px;
     }
     .key-value-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #F1F5F9;
-      padding-bottom: 3px;
-      font-size: 11px;
+      border-bottom: 1px dashed var(--border-thin);
+      padding-bottom: 6px;
+      font-size: 12.5px;
     }
     .key-value-row:last-child {
       border-bottom: none;
@@ -336,238 +345,963 @@
     }
     .key-label {
       color: var(--text-muted);
+      font-weight: 500;
     }
     .key-val {
-      font-weight: 600;
-      color: var(--primary);
+      font-weight: 700;
+      color: var(--text-main);
     }
 
-    /* ==========================================
-       BADGES & LABELS
-       ========================================== */
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-thin);
+    }
+    .checklist-item:last-child {
+      border-bottom: none;
+    }
+    .chk-lbl {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .chk-lbl svg {
+      width: 14px;
+      height: 14px;
+    }
+    .chk-lbl svg.success { color: var(--success); }
+
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 3px;
-      padding: 1px 4px;
-      border-radius: 3px;
-      font-size: 8px;
+      padding: 2px 6px;
+      border-radius: 2px;
+      font-size: 8.5px;
       font-family: var(--font-mono);
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
     .badge-success {
       background-color: var(--success-bg);
       color: var(--success);
+      border: 0.5px solid rgba(4, 120, 87, 0.15);
     }
     .badge-warning {
       background-color: var(--warning-bg);
       color: var(--warning);
+      border: 0.5px solid rgba(194, 65, 12, 0.15);
     }
     .badge-info {
       background-color: var(--info-bg);
       color: var(--info);
+      border: 0.5px solid rgba(29, 78, 216, 0.15);
     }
 
     /* ==========================================
-       MEDIA & MAP COMPONENTS
+       TABLES (SPACIOUS & RESPONSIBLY SCROLLABLE)
        ========================================== */
-    .visual-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 2px;
-    }
-    .visual-item-card {
-      border: 1px solid var(--border);
+    .table-container {
+      border: 1px solid var(--border-thin);
       border-radius: 4px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-    .visual-media {
+      overflow-x: auto; /* Limit horizontal scrolling strictly to within the card wrapper */
       width: 100%;
-      height: 85px;
-      object-fit: cover;
-      border-bottom: 1px solid var(--border);
+      -webkit-overflow-scrolling: touch;
     }
-    .visual-caption {
-      padding: 5px 6px;
-      font-size: 8.5px;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      table-layout: fixed; /* Force fixed column widths to respect cell widths and wrap text */
+    }
+    th {
+      background-color: #f8fafc;
+      color: var(--primary);
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 8px 12px;
+      border-bottom: 1.5px solid var(--border-dark);
+      white-space: nowrap;
+    }
+    td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-thin);
       color: var(--text-muted);
-      line-height: 1.3;
+      font-size: 11.5px;
+      font-weight: 500;
+      word-wrap: break-word; /* Wrap long strings inside cells */
+    }
+    tr:nth-child(even) td {
+      background-color: #fafbfd;
+    }
+    tr:hover td {
+      background-color: #f1f5f9;
+    }
+    .font-numeric {
+      font-family: var(--font-mono);
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+    .text-right {
+      text-align: right;
+    }
+    .nowrap {
+      white-space: nowrap;
+    }
+    .summary-row td {
+      font-weight: 700;
+      background-color: #f1f5f9 !important;
+      color: var(--primary);
+      border-top: 1.5px solid var(--border-dark);
     }
 
-    .gps-coordinate-strip {
-      background-color: #FAF9F6;
-      border-top: 1px solid var(--border);
-      padding: 6px 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 600;
-      color: var(--primary);
-      border-radius: 3px;
+    /* Highlighted Deals inside tables */
+    tr.deal-highlight-success td {
+      background-color: var(--success-bg) !important;
+      color: var(--success-dark) !important;
+      font-weight: 700;
+    }
+    tr.deal-highlight-success td .font-numeric {
+      color: var(--success-dark) !important;
+    }
+    tr.deal-highlight-warning td {
+      background-color: var(--warning-bg) !important;
+      color: var(--warning) !important;
+      font-weight: 700;
+    }
+    tr.deal-highlight-warning td .font-numeric {
+      color: var(--warning) !important;
     }
 
     /* ==========================================
-       NEWS FEED TIMELINE
+       TIMELINE FEED (ROBUST INLINE METADATA)
        ========================================== */
     .news-timeline {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 12px;
     }
     .news-timeline-item {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       position: relative;
     }
     .news-timeline-item::after {
       content: '';
       position: absolute;
-      left: 3px;
-      top: 12px;
-      bottom: -12px;
-      width: 1.2px;
-      background-color: var(--border);
+      left: 4px;
+      top: 14px;
+      bottom: -16px;
+      width: 1px;
+      background-color: var(--border-thin);
     }
     .news-timeline-item:last-child::after {
       display: none;
     }
     .news-bullet {
-      width: 6px;
-      height: 6px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
-      background-color: var(--accent);
+      background-color: var(--secondary);
+      border: 2px solid #ffffff;
+      box-shadow: 0 0 0 1px var(--secondary);
       margin-top: 4px;
       flex-shrink: 0;
+      z-index: 2;
     }
     .news-body {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 3px;
+      flex: 1;
     }
     .news-header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
+      gap: 8px;
     }
     .news-subject {
       font-weight: 700;
-      font-size: 10.5px;
-      color: var(--primary);
-    }
-    .news-date {
-      font-family: var(--font-mono);
-      font-size: 8px;
-      color: var(--text-light);
+      font-size: 11.5px;
+      color: var(--text-main);
     }
     .news-desc {
-      font-size: 9.5px;
+      font-size: 10.5px;
       color: var(--text-muted);
-      line-height: 1.3;
+      line-height: 1.35;
+      background: #f8fafc;
+      padding: 6px 10px;
+      border-radius: var(--r);
+      border-left: 2px solid var(--secondary);
+      margin-top: 2px;
+    }
+
+    /* Numbered Timeline for Stages */
+    .stage-timeline .news-timeline-item {
+      gap: 14px;
+    }
+    .stage-timeline .news-timeline-item::after {
+      left: 9px;
+      top: 20px;
+      bottom: -14px;
+      width: 1.5px;
+    }
+    .stage-number {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 9.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+    .stage-number.completed {
+      background-color: var(--success);
+    }
+    .stage-number.active {
+      background-color: var(--accent);
     }
 
     /* ==========================================
-       FORMULA & LEDGER CALCULATOR
+       MEDIA GALLERY & MAPS
+       ========================================== */
+    .visual-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .visual-item-card {
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background-color: #fafafa;
+    }
+    .visual-media {
+      width: 100%;
+      height: 120px; /* Increased from 80px for better visibility */
+      object-fit: cover;
+      border-bottom: 1px solid var(--border-thin);
+    }
+    .visual-caption {
+      padding: 5px 8px;
+      font-size: 9px;
+      color: var(--text-muted);
+      line-height: 1.3;
+      background: #ffffff;
+    }
+    .gps-coordinate-strip {
+      background: #0f172a;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--accent);
+      border-radius: var(--r);
+    }
+
+    /* ==========================================
+       NEGOTIATION GAUGE (SLIDER)
+       ========================================== */
+    .negotiation-gauge-wrapper {
+      background-color: #f8fafc;
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .gauge-labels-top {
+      position: relative;
+      height: 14px;
+      width: 100%;
+    }
+    .gauge-label {
+      position: absolute;
+      font-size: 8.5px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+      top: 0;
+    }
+    .gauge-label.target-lbl {
+      left: 0%;
+      color: var(--info);
+    }
+    .gauge-label.negotiated-lbl {
+      left: 41%;
+      transform: translateX(-50%);
+      color: var(--success);
+      font-size: 9px;
+    }
+    .gauge-label.ask-lbl {
+      right: 0%;
+      color: var(--warning);
+    }
+    .gauge-track-container {
+      position: relative;
+      height: 6px;
+      background-color: #e2e8f0;
+      border-radius: 3px;
+      margin: 8px 0 10px 0;
+    }
+    .gauge-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background-color: var(--success-bg);
+      border-radius: 3px;
+    }
+    .gauge-node {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+    .gauge-node.target {
+      left: 0%;
+      background-color: var(--info);
+    }
+    .gauge-node.negotiated {
+      left: 41%;
+      background-color: var(--success);
+      width: 12px;
+      height: 12px;
+      z-index: 10;
+    }
+    .gauge-node.ask {
+      left: 100%;
+      background-color: var(--warning);
+    }
+
+    /* ==========================================
+       RISK BARS
+       ========================================== */
+    .risk-bar-container {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+    .risk-bar-container:last-child {
+      margin-bottom: 0;
+    }
+    .risk-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .risk-bar-bg {
+      background-color: #e2e8f0;
+      height: 5px;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .risk-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    /* ==========================================
+       THREE-COLUMN INFRASTRUCTURE MILESTONES
+       ========================================== */
+    .milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 10px;
+    }
+    .milestone-box {
+      background-color: #f8fafc;
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .milestone-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .milestone-title {
+      font-weight: 700;
+      font-size: 11.5px;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+    .milestone-meta-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      border-bottom: 1px dashed var(--border-thin);
+      padding-bottom: 6px;
+    }
+    .milestone-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.45;
+      margin-top: 2px;
+    }
+
+    /* ==========================================
+       ACQUISITION COST & ROI BREAKDOWN (SPLIT ROW)
        ========================================== */
     .math-formula-card {
-      background-color: #FAFAF9;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 12px;
+      background-color: #fafaf9;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--r);
+      padding: 14px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 10px;
+      margin-top: 12px;
     }
     .math-expr {
       font-family: var(--font-mono);
-      font-size: 11.5px;
+      font-size: 11px;
+      font-weight: 700;
       color: var(--primary);
-      background: #FFFFFF;
-      padding: 5px 10px;
-      border: 1px solid var(--border);
-      border-radius: 4px;
+      background: rgba(159, 130, 82, 0.08);
+      padding: 7px 10px;
+      border: 1px solid var(--accent);
+      border-radius: var(--r);
       letter-spacing: 0.01em;
       text-align: center;
       width: 100%;
     }
 
+    /* Charts side-by-side or stacked inside column */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      min-width: 0;
+    }
+    .chart-wrapper-box {
+      height: 160px;
+      width: 100%;
+      position: relative;
+    }
+    .chart-wrapper-box canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .disclaimer-box {
+      font-size: 8.5px;
+      color: var(--text-light);
+      line-height: 1.35;
+      border-top: 1px dashed var(--border-thin);
+      padding-top: 6px;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
     /* ==========================================
-       UNIFIED AUDIT & SYSTEM SUMMARY FOOTER
+       AUDIT FOOTER
        ========================================== */
-    .audit-footer {
-      background-color: #FFFFFF;
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 14px 18px;
+    .audit-statement-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-dark);
+      border-radius: var(--r);
+      padding: 16px 20px;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-top: 10px;
     }
     .audit-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #FAF9F6;
-      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-thin);
+      padding-bottom: 8px;
     }
     .audit-stamp {
       font-family: var(--font-mono);
-      font-size: 8.5px;
+      font-size: 9.5px;
       font-weight: 700;
-      color: var(--accent);
-      letter-spacing: 0.06em;
+      color: var(--secondary);
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .audit-stamp svg {
+      width: 13px;
+      height: 13px;
     }
     .audit-text {
-      font-size: 9.5px;
+      font-size: 10px;
       color: var(--text-muted);
-      line-height: 1.35;
+      line-height: 1.45;
+    }
+    .report-footer {
+      border-top: 1.5px solid var(--border-dark);
+      padding-top: 10px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9.5px;
+      color: var(--text-light);
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     /* ==========================================
-       CHARTS GRID
+       REDESIGNED COMPONENTS: COST & TRANSACTIONS
        ========================================== */
-    .charts-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    /* Cost breakdown segmented bar styles */
+    .cost-visualizer {
+      display: flex;
+      flex-direction: column;
       gap: 10px;
+      margin-bottom: 15px;
+      padding: 8px 12px;
+      background: #fafaf9;
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
     }
-    .chart-wrapper {
-      position: relative;
-      height: 125px;
+    .cost-bar-title {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .cost-bar-wrapper {
+      display: flex;
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      background-color: #e2e8f0;
+      border: 1px solid var(--border-thin);
+    }
+    .cost-bar-segment {
+      height: 100%;
+      transition: filter 0.15s ease-in-out, transform 0.1s ease-in-out;
+      cursor: pointer;
+    }
+    .cost-bar-segment:hover {
+      filter: brightness(0.9);
+      transform: scaleY(1.1);
+    }
+    .segment-base { background-color: var(--accent); }     /* Gold/Champagne */
+    .segment-stamp { background-color: var(--primary); }    /* Deep Slate */
+    .segment-reg { background-color: var(--secondary); }    /* Corporate Blue */
+    .segment-fee { background-color: var(--success); }      /* Green */
+    .segment-legal { background-color: var(--text-light); }  /* Steel Gray */
+
+    .cost-legends {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+    }
+    .cost-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 9.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .legend-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Redesigned Cost Breakdown List (No table scroll or clash) */
+    .cost-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       width: 100%;
     }
+    .cost-item {
+      background-color: #fafafa;
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      padding: 8px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .cost-item:hover {
+      background-color: #f1f5f9;
+    }
+    .cost-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .cost-name {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .cost-math {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--border-thin);
+      padding-top: 6px;
+    }
+    .cost-factor {
+      font-size: 10.5px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+    .cost-outflow {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .cost-total-item {
+      background-color: #f1f5f9;
+      border: 1px solid var(--border-dark);
+      border-radius: var(--r);
+      padding: 10px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cost-total-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .cost-total-outflow {
+      font-family: var(--font-mono);
+      font-size: 13.5px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    /* ROI Formula redesign styles */
+    .formula-math-display {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      color: var(--primary);
+      font-size: 11px;
+      padding: 10px 14px;
+      background: #ffffff;
+      border-radius: var(--r);
+      border: 1px solid var(--border-thin);
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .formula-fraction {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.1;
+      font-size: 9.5px;
+    }
+    .fraction-numerator {
+      border-bottom: 1.5px solid var(--primary);
+      padding-bottom: 2px;
+      width: 100%;
+      text-align: center;
+    }
+    .fraction-denominator {
+      padding-top: 2px;
+      width: 100%;
+      text-align: center;
+    }
+    .formula-lhs {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 12.5px;
+    }
+    .formula-eq, .formula-multiplier {
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+    .formula-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      margin-top: 8px;
+    }
+    .formula-kpi-card {
+      background-color: #ffffff;
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 2px;
+      transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .formula-kpi-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+    .formula-kpi-card.highlighted {
+      border: 1px solid rgba(4, 120, 87, 0.25);
+      background-color: var(--success-bg);
+    }
+    .formula-kpi-label {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .formula-kpi-val {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .formula-kpi-sub {
+      font-size: 8px;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* Redesigned List-based Comparable Transactions layout (No scroll or clash) */
+    .comp-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+    .comp-item {
+      background-color: #fafafa;
+      border: 1px solid var(--border-thin);
+      border-radius: var(--r);
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    .comp-item:hover {
+      background-color: #f1f5f9;
+      transform: translateY(-1px);
+    }
+    .comp-item.subject-item {
+      background-color: rgba(159, 130, 82, 0.03);
+      border: 1px solid var(--accent);
+      box-shadow: 0 2px 8px rgba(159, 130, 82, 0.05);
+    }
+    .comp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .comp-node {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .comp-icon {
+      width: 12px;
+      height: 12px;
+      color: var(--text-light);
+    }
+    .comp-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+    .comp-name.subject-highlight {
+      color: var(--accent);
+    }
+    .comp-value {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    .comp-value.subject-highlight {
+      color: var(--accent);
+      font-size: 12.5px;
+    }
+    .comp-details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      border-top: 1px dashed var(--border-thin);
+      padding-top: 6px;
+    }
+    .comp-badges {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .comp-meta {
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .comp-meta-sep {
+      color: var(--border-dark);
+      font-size: 8px;
+    }
+    .comp-rate-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .comp-rate-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .comp-rate-label.subject-rate {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .comp-gauge {
+      width: 60px;
+      height: 4px;
+      background-color: #cbd5e1;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .comp-gauge-fill {
+      height: 100%;
+      background-color: var(--text-light);
+    }
+    .comp-gauge-fill.subject-fill {
+      background-color: var(--accent);
+    }
+    .badge-accent {
+      background-color: rgba(159, 130, 82, 0.08);
+      color: var(--accent);
+      border: 0.5px solid rgba(159, 130, 82, 0.25);
+    }
+
+    @media (max-width: 600px) {
+      .formula-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .formula-math-display {
+        flex-wrap: wrap;
+        font-size: 10px;
+        gap: 4px;
+      }
+    }
 
     /* ==========================================
-       RESPONSIVE & TABLET LAYOUTS
+       FLUID RESPONSIVE MEDIA BREAKPOINTS
        ========================================== */
-    @media (max-width: 900px) {
-      .main-grid, .charts-grid, .metrics-ribbon, .visual-grid {
-        grid-template-columns: 1fr;
-      }
-      .metrics-ribbon {
-        row-gap: 10px;
-      }
-      .ribbon-kpi-card.hero-kpi {
+    @media (max-width: 1150px) {
+      .report-canvas {
+        width: 100%;
+        max-width: 100%;
+        border-left: none;
         border-right: none;
-        padding-right: 0;
-        border-bottom: 1.5px solid var(--border);
-        padding-bottom: 10px;
+        box-shadow: none;
+        padding: 15px 10px;
+      }
+      .grid-global, .section-row {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .split-grid-cost {
+        grid-template-columns: 1fr; /* Stack cost table and ROI formula vertically */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .metrics-ribbon {
+        grid-template-columns: 1fr 1fr; /* Stack KPIs into 2 columns */
+        gap: 12px;
+      }
+      .ribbon-kpi-card {
+        border-right: none !important;
+        border-bottom: 1px solid var(--border-thin);
+        padding-bottom: 8px;
+      }
+      .ribbon-kpi-card:last-child {
+        border-bottom: none;
+      }
+      .charts-row {
+        grid-template-columns: 1fr; /* Stack Doughnut & Bar charts vertically */
+      }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-ribbon {
+        grid-template-columns: 1fr; /* Stack KPIs into 1 column on mobile */
+      }
+      .visual-grid {
+        grid-template-columns: 1fr; /* Stack photo items vertically */
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Continuous Canvas Container -->
+  <!-- Spacious Continuous Canvas Container -->
   <div class="report-canvas">
 
     <!-- 1. Brand Header Bar -->
@@ -577,376 +1311,749 @@
         <div class="brand-logo-text">URBAN<span>VAULT</span></div>
       </div>
       <div class="header-meta">
-        <span>Purchase Ledger ID: <strong>UV-PROP-2026-4412</strong></span>
-        <span style="opacity: 0.5;">|</span>
-        <span>Secure Transaction Node</span>
+        <span>Ledger Node: <strong>UV-PROP-2026-4412</strong></span>
+        <span style="opacity: 0.3;">|</span>
+        <div class="node-status">
+          <div class="node-pulse"></div>
+          <span>Secure Accounting Node</span>
+        </div>
       </div>
     </header>
 
-    <!-- 2. Hero Cover Dashboard & Metrics Strip -->
+    <!-- 2. Hero Cover Dashboard (Redesigned Light Institutional Style) -->
     <section class="hero-dashboard">
       <div class="hero-title-section">
-        <div class="hero-category">Acquisition Capital Ledger &bull; Factual Audit</div>
-        <h1 class="hero-title">Property Purchase & Return Ledger</h1>
-        <div class="hero-subtitle">Completed acquisition ledger for <strong>Chirag Gandecha</strong> on Besa Plot #204</div>
+        <div class="hero-category">Acquisition &bull; Factual Financial Audit</div>
+        <h1 class="hero-title">Property Purchase &amp; Return Ledger</h1>
+        <div class="hero-subtitle">Completed acquisition ledger for <strong>Chirag Gandecha</strong> on Besa Plot #204 &bull; Ask: <strong>₹2.52 Cr</strong> &bull; Closed: <strong>₹2.35 Cr</strong></div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px; line-height: 1.5; max-width: 900px;">
+          The Besa Plot #204 commercial asset represents a key strategic acquisition in the emerging South-East Nagpur commercial corridor. Positioned adjacent to DMart Dighori and directly connected to the upcoming NHAI elevated flyover corridor, this 3,600 Sq.Ft NA-certified commercial plot is primed for high-yield showroom leasing or capital appreciation exit within an 18-month hold period.
+        </p>
       </div>
 
       <!-- Metrics Ribbon -->
       <div class="metrics-ribbon">
-        <div class="ribbon-kpi-card hero-kpi">
-          <div class="ribbon-label"><i data-lucide="award"></i> Deal ROI</div>
-          <div class="ribbon-value highlight-val">50.11%</div>
-          <div class="ribbon-badge-sub" style="color: var(--accent);">Annualized: 33.41% / yr</div>
+        <div class="ribbon-kpi-card">
+          <div class="ribbon-label"><i data-lucide="tag"></i> Original Ask Price</div>
+          <div class="ribbon-value font-numeric" style="color: var(--warning);">₹2,52,00,000</div>
+          <div class="ribbon-badge-sub">₹7,000 / Sq.Ft</div>
         </div>
         <div class="ribbon-kpi-card">
-          <div class="ribbon-label"><i data-lucide="wallet"></i> All-In Deployed Cost</div>
-          <div class="ribbon-value font-numeric">₹2,56,47,500</div>
-          <div class="ribbon-badge-sub" style="color: var(--text-light); font-weight: normal;">₹7,124 / Sq.Ft Rate</div>
+          <div class="ribbon-label"><i data-lucide="wallet"></i> Deployed Cost</div>
+          <div class="ribbon-value font-numeric">₹2,55,30,000</div>
+          <div class="ribbon-badge-sub">₹7,092 / Sq.Ft</div>
         </div>
         <div class="ribbon-kpi-card">
-          <div class="ribbon-label"><i data-lucide="arrow-up-right"></i> Resale / Exit Value</div>
+          <div class="ribbon-label"><i data-lucide="trending-up"></i> Exit Value</div>
           <div class="ribbon-value font-numeric">₹3,85,00,000</div>
-          <div class="ribbon-badge-sub" style="color: var(--text-light); font-weight: normal;">₹10,694 / Sq.Ft Rate</div>
+          <div class="ribbon-badge-sub">₹10,694 / Sq.Ft</div>
         </div>
         <div class="ribbon-kpi-card">
           <div class="ribbon-label"><i data-lucide="coins"></i> Net Capital Gain</div>
-          <div class="ribbon-value font-numeric">₹1,28,52,500</div>
+          <div class="ribbon-value highlight-gain font-numeric">₹1,29,70,000</div>
           <div class="ribbon-badge-sub" style="color: var(--success);">Appreciation: +63.8%</div>
         </div>
         <div class="ribbon-kpi-card">
-          <div class="ribbon-label"><i data-lucide="clock"></i> Holding Period</div>
+          <div class="ribbon-label"><i data-lucide="award"></i> Capital ROI</div>
+          <div class="ribbon-value highlight-val font-numeric">50.80%</div>
+          <div class="ribbon-badge-sub">Annualized: 33.87% / yr</div>
+        </div>
+        <div class="ribbon-kpi-card">
+          <div class="ribbon-label"><i data-lucide="calendar"></i> Hold Period</div>
           <div class="ribbon-value font-numeric">18 Months</div>
-          <div class="ribbon-badge-sub" style="color: var(--text-light); font-weight: normal;">Acquired: Jan 2025</div>
+          <div class="ribbon-badge-sub">Acquired: Jan 2025</div>
         </div>
       </div>
     </section>
 
-    <!-- 3. Primary Core Data Grid -->
-    <main class="main-grid">
+    <!-- Redesigned Main Dashboard (Balanced Heights & Spacing) -->
+    <main style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
       
-      <!-- Primary Column (Left) -->
-      <div class="flex-column">
+      <!-- SECTION 1: ACQUISITION & ANALYTICS -->
+      <section class="section-row split-55-45">
+        <div class="flex-column">
+          <!-- Acquisition Cost Breakdown Card -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="calculator"></i> All-In Acquisition Cost Breakdown</div>
+             <!-- Segmented Progress Bar Visualizer -->
+            <div class="cost-visualizer">
+              <div class="cost-bar-title">Capital Allocation Breakdown</div>
+              <div class="cost-bar-wrapper">
+                <div class="cost-bar-segment segment-base" style="width: 92.05%;" title="Agreement Value: 92.05% (₹2,35,00,000)"></div>
+                <div class="cost-bar-segment segment-stamp" style="width: 5.52%;" title="Stamp Duty: 5.52% (₹14,10,000)"></div>
+                <div class="cost-bar-segment segment-reg" style="width: 0.92%;" title="Registration Fee: 0.92% (₹2,35,000)"></div>
+                <div class="cost-bar-segment segment-fee" style="width: 0.92%;" title="Facilitation Fee: 0.92% (₹2,35,000)"></div>
+                <div class="cost-bar-segment segment-legal" style="width: 0.59%;" title="Legal & Diligence: 0.59% (₹1,50,000)"></div>
+              </div>
+              <div class="cost-legends">
+                <div class="cost-legend-item"><span class="legend-indicator segment-base"></span><span>Base Cost (92.1%)</span></div>
+                <div class="cost-legend-item"><span class="legend-indicator segment-stamp"></span><span>Stamp Duty (5.5%)</span></div>
+                <div class="cost-legend-item"><span class="legend-indicator segment-reg"></span><span>Reg Fee (0.9%)</span></div>
+                <div class="cost-legend-item"><span class="legend-indicator segment-fee"></span><span>Facilitation (0.9%)</span></div>
+                <div class="cost-legend-item"><span class="legend-indicator segment-legal"></span><span>Legal (0.6%)</span></div>
+              </div>
+            </div>
+
+            <!-- Redesigned Cost Breakdown List (No table, no clashing, no scrolling) -->
+            <div class="cost-list">
+              <div class="cost-item">
+                <div class="cost-info">
+                  <span class="cost-name">Agreement Value (Base Land Cost)</span>
+                  <span class="badge badge-info">Primary Capital</span>
+                </div>
+                <div class="cost-math">
+                  <span class="cost-factor">&mdash;</span>
+                  <span class="cost-outflow font-numeric">₹2,35,00,000</span>
+                </div>
+              </div>
+              <div class="cost-item">
+                <div class="cost-info">
+                  <span class="cost-name">Stamp Duty Charges</span>
+                  <span class="badge badge-warning">Statutory Cost</span>
+                </div>
+                <div class="cost-math">
+                  <span class="cost-factor">6.00%</span>
+                  <span class="cost-outflow font-numeric">₹14,10,000</span>
+                </div>
+              </div>
+              <div class="cost-item">
+                <div class="cost-info">
+                  <span class="cost-name">Government Registration Fees</span>
+                  <span class="badge badge-warning">Statutory Cost</span>
+                </div>
+                <div class="cost-math">
+                  <span class="cost-factor">1.00%</span>
+                  <span class="cost-outflow font-numeric">₹2,35,000</span>
+                </div>
+              </div>
+              <div class="cost-item">
+                <div class="cost-info">
+                  <span class="cost-name">Urban Vault Facilitation Fee</span>
+                  <span class="badge badge-success">Platform Fee</span>
+                </div>
+                <div class="cost-math">
+                  <span class="cost-factor">1.00%</span>
+                  <span class="cost-outflow font-numeric">₹2,35,000</span>
+                </div>
+              </div>
+              <div class="cost-item">
+                <div class="cost-info">
+                  <span class="cost-name">Legal Diligence &amp; Title Search</span>
+                  <span class="badge badge-success">Platform Fee</span>
+                </div>
+                <div class="cost-math">
+                  <span class="cost-factor">Fixed</span>
+                  <span class="cost-outflow font-numeric">₹1,50,000</span>
+                </div>
+              </div>
+              <div class="cost-total-item">
+                <div class="cost-info">
+                  <span class="cost-total-name">Total All-In Acquisition Cost</span>
+                  <span class="badge badge-info" style="background-color: var(--secondary); color: white;">Total Capital</span>
+                </div>
+                <span class="cost-total-outflow font-numeric">₹2,55,30,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
         
-        <!-- Landmark Proximities -->
-        <div class="card">
-          <div class="card-title"><i data-lucide="compass"></i> Geofence Radius Landmarks (Google Places API Verified)</div>
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Verified landmark node</th>
-                  <th>Category type</th>
-                  <th class="text-right">Road Distance</th>
-                  <th class="text-right">Drive Time</th>
-                </tr>
-              </thead>
-              <tbody class="font-numeric">
-                <tr>
-                  <td>Dr. Babasaheb Ambedkar Intl Airport</td>
-                  <td>Transit Terminal</td>
-                  <td class="text-right">4.8 km</td>
-                  <td class="text-right">12 Mins</td>
-                </tr>
-                <tr>
-                  <td>MIHAN SEZ Commercial Entry</td>
-                  <td>Employment Hub</td>
-                  <td class="text-right">8.0 km</td>
-                  <td class="text-right">15 Mins</td>
-                </tr>
-                <tr>
-                  <td>Nagpur Metro Phase II Station (Besa)</td>
-                  <td>Metro Transit</td>
-                  <td class="text-right">2.0 km</td>
-                  <td class="text-right">5 Mins</td>
-                </tr>
-                <tr>
-                  <td>Manish Nagar Commercial Spine</td>
-                  <td>Retail District</td>
-                  <td class="text-right">2.1 km</td>
-                  <td class="text-right">6 Mins</td>
-                </tr>
-                <tr>
-                  <td>Wardha Road Expressway Link</td>
-                  <td>National Highway</td>
-                  <td class="text-right">4.1 km</td>
-                  <td class="text-right">8 Mins</td>
-                </tr>
-                <tr>
-                  <td>Nagpur Central Railway Junction</td>
-                  <td>Rail Transit</td>
-                  <td class="text-right">10.0 km</td>
-                  <td class="text-right">25 Mins</td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="flex-column">
+          <!-- Performance Analytics Charts -->
+          <div class="card">
+            <div>
+              <div class="card-title"><i data-lucide="bar-chart-2"></i> Financial Performance Analytics</div>
+              <div class="charts-row" style="margin-top: 10px;">
+                <div class="chart-wrapper-box" style="height: 180px;">
+                  <canvas id="costBreakdownChart"></canvas>
+                </div>
+                <div class="chart-wrapper-box" style="height: 180px;">
+                  <canvas id="dealPerformanceChart"></canvas>
+                </div>
+              </div>
+              <!-- Analytical Key Takeaways Panel -->
+              <div style="margin-top: 12px; border-top: 1px dashed var(--border-thin); padding-top: 10px;">
+                <div style="font-size: 9px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">Audit Takeaways &amp; Insights</div>
+                <ul class="key-value-list" style="gap: 5px; font-size: 11.5px; list-style: none; padding: 0; margin: 0;">
+                  <li style="display: flex; gap: 6px; align-items: flex-start; line-height: 1.45;">
+                    <span style="color: var(--success); font-weight: bold; font-size: 14px; line-height: 1;">&bull;</span>
+                    <span><strong>Asset Cost Concentration:</strong> 92.1% of capital is deployed directly into the land asset, minimizing transaction-fee leakages.</span>
+                  </li>
+                  <li style="display: flex; gap: 6px; align-items: flex-start; line-height: 1.45;">
+                    <span style="color: var(--success); font-weight: bold; font-size: 14px; line-height: 1;">&bull;</span>
+                    <span><strong>Acquisition Margin Lift:</strong> The closed price of ₹6,528/Sq.Ft represents an immediate ₹17.00 Lakh savings (&minus;6.7%) off the original asking price.</span>
+                  </li>
+                  <li style="display: flex; gap: 6px; align-items: flex-start; line-height: 1.45;">
+                    <span style="color: var(--success); font-weight: bold; font-size: 14px; line-height: 1;">&bull;</span>
+                    <span><strong>Frictional Load Ratio:</strong> Stamp duty (6.0%) and registration fee (1.0%) total 7.00% of base land value, conforming to Nagpur stamp rules.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="disclaimer-box" style="margin-top: 15px;">
+              <strong>ReachX SLA Sec 3.9:</strong> Charts represent normalized asset data vectors. Live pricing feeds and trading operations are excluded.
+            </div>
+          </div>
+
+          <!-- ROI Derivation Formula Card -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="percent"></i> ROI Derivation Formula</div>
+            <div class="formula-math-display" style="margin-top: 4px;">
+              <span class="formula-lhs">ROI</span>
+              <span class="formula-eq">=</span>
+              <div class="formula-fraction">
+                <span class="fraction-numerator">Resale Value &minus; All-In Cost</span>
+                <span class="fraction-denominator">All-In Cost</span>
+              </div>
+              <span class="formula-multiplier">&times; 100</span>
+            </div>
+            <div class="formula-kpi-grid">
+              <div class="formula-kpi-card">
+                <span class="formula-kpi-label">All-In Cost (A)</span>
+                <span class="formula-kpi-val font-numeric">₹2,55,30,000</span>
+                <span class="formula-kpi-sub">Total Outflow</span>
+              </div>
+              <div class="formula-kpi-card">
+                <span class="formula-kpi-label">Resale Exit (B)</span>
+                <span class="formula-kpi-val font-numeric">₹3,85,00,000</span>
+                <span class="formula-kpi-sub">Exit Valuation</span>
+              </div>
+              <div class="formula-kpi-card highlighted">
+                <span class="formula-kpi-label" style="color: var(--success);">Net Gain (B &minus; A)</span>
+                <span class="formula-kpi-val font-numeric" style="color: var(--success);">₹1,29,70,000</span>
+                <span class="formula-kpi-sub" style="color: var(--success); font-weight: 700;">+50.80% ROI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: MARKET COMPARATIVE & NEGOTIATIONS -->
+      <section class="section-row">
+        <div class="flex-column">
+          <!-- Comparable Market Transactions Table -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="history"></i> Comparable Market Transactions</div>
+            <div class="table-container">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; table-layout: fixed;">
+                <thead>
+                  <tr>
+                    <th style="width: 32%;">Location</th>
+                    <th style="width: 12%;">Distance</th>
+                    <th style="width: 13%;">Size</th>
+                    <th style="width: 12%;">Date</th>
+                    <th style="width: 16%;">Channel</th>
+                    <th class="text-right" style="width: 15%;">Rate</th>
+                    <th class="text-right" style="width: 15%;">Total Value</th>
+                  </tr>
+                </thead>
+                <tbody class="font-numeric">
+                  <tr>
+                    <td><strong>Besa Main Road Plot #118</strong></td>
+                    <td>0.8 km</td>
+                    <td>3.0k Sq.Ft</td>
+                    <td>Mar 2025</td>
+                    <td><span class="badge" style="background-color: #fef3c7; color: #d97706; border: 0.5px solid rgba(217, 119, 6, 0.15);">Direct</span></td>
+                    <td class="text-right">₹6,200/Sq.Ft</td>
+                    <td class="text-right">₹1.86 Cr</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Besa-Pipla Road Commercial Touch</strong></td>
+                    <td>1.5 km</td>
+                    <td>4.0k Sq.Ft</td>
+                    <td>Jun 2025</td>
+                    <td><span class="badge" style="background-color: #fee2e2; color: #dc2626; border: 0.5px solid rgba(220, 38, 38, 0.15);">Competitor</span></td>
+                    <td class="text-right">₹6,700/Sq.Ft</td>
+                    <td class="text-right">₹2.68 Cr</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Manish Nagar Spine Comp</strong></td>
+                    <td>2.1 km</td>
+                    <td>2.5k Sq.Ft</td>
+                    <td>Nov 2024</td>
+                    <td><span class="badge" style="background-color: #f1f5f9; color: #475569; border: 0.5px solid rgba(71, 85, 105, 0.15);">Traditional</span></td>
+                    <td class="text-right">₹6,000/Sq.Ft</td>
+                    <td class="text-right">₹1.50 Cr</td>
+                  </tr>
+                  <tr class="deal-highlight-success">
+                    <td><strong>Subject Plot #204</strong></td>
+                    <td><span class="badge badge-success">Subject</span></td>
+                    <td>3.6k Sq.Ft</td>
+                    <td>Jan 2025</td>
+                    <td><span class="badge badge-success">Urban Vault</span></td>
+                    <td class="text-right" style="color: var(--success-dark) !important;">₹6,528/Sq.Ft</td>
+                    <td class="text-right" style="color: var(--success-dark) !important;">₹2.35 Cr</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="disclaimer-box">
+              <strong>ReachX SLA Sec 3.8.1:</strong> Comparable market records represent transactions across direct, traditional, and competitor networks.
+            </div>
           </div>
         </div>
 
-        <!-- Construction News Timeline -->
-        <div class="card">
-          <div class="card-title"><i data-lucide="newspaper"></i> Construction Updates & Local Milestones</div>
-          <div class="news-timeline">
-            <div class="news-timeline-item">
-              <div class="news-bullet"></div>
-              <div class="news-body">
-                <div class="news-header">
-                  <span class="news-subject">Metro Line 2 Elevated Viaduct Pillar Castings</span>
-                  <span class="news-date">10 Days Ago</span>
+        <div class="flex-column">
+          <!-- Negotiations & Benchmarks -->
+          <div class="card highlighted-border">
+            <div class="card-title"><i data-lucide="sliders"></i> Negotiations &amp; Benchmarks</div>
+            <div class="card-content-flow">
+              <div class="key-value-list">
+                <div class="key-value-row"><span class="key-label">Original Asking Price</span><span class="key-val font-numeric nowrap">₹7,000 / Sq.Ft</span></div>
+                <div class="key-value-row"><span class="key-label">e-ASR Gov Circle Rate</span><span class="key-val font-numeric nowrap">₹4,200 / Sq.Ft</span></div>
+                <div class="key-value-row"><span class="key-label">Besa Highway Touch Ask</span><span class="key-val font-numeric nowrap">₹6,800 / Sq.Ft</span></div>
+                <div class="key-value-row"><span class="key-label">Negotiated Closed Price</span><span class="key-val font-numeric nowrap" style="color: var(--success);">₹6,528 / Sq.Ft</span></div>
+              </div>
+              
+              <div class="negotiation-gauge-wrapper">
+                <span style="font-size: 8.5px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em;">Acquisition Bid Position</span>
+                <div class="gauge-labels-top">
+                  <span class="gauge-label target-lbl">Target ₹6.2k</span>
+                  <span class="gauge-label negotiated-lbl">Closed ₹6.53k</span>
+                  <span class="gauge-label ask-lbl">Ask ₹7.0k</span>
                 </div>
-                <div class="news-desc">Maha Metro commenced high-grade concrete casting for pillars along the Besa station link road. Structural works are 15% complete.</div>
+                <div class="gauge-track-container">
+                  <div class="gauge-fill" style="width: 41%;"></div>
+                  <div class="gauge-node target"></div>
+                  <div class="gauge-node negotiated"></div>
+                  <div class="gauge-node ask"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; font-size: 10px;">
+                  <span style="color: var(--text-muted); font-weight: 500;">Acquisition Savings:</span>
+                  <span class="badge badge-success nowrap">₹17.00 Lakhs Saved (-6.7%)</span>
+                </div>
+              </div>
+              <div class="disclaimer-box">
+                <strong>ReachX SLA Sec 4.2:</strong> Pricing points and bids are static user records. Platform does not feature live bidding.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: PROJECTIONS & RISK MATRIX -->
+      <section class="section-row">
+        <div class="flex-column">
+          <!-- Detailed ROI Projection Matrix -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="trending-up"></i> Detailed ROI Projection Matrix</div>
+            <div class="table-container">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; table-layout: fixed; font-size: 11px;">
+                <thead>
+                  <tr>
+                    <th style="width: 24%; font-size: 9px; padding: 6px 8px;">Scenario</th>
+                    <th class="text-right" style="width: 13%; font-size: 9px; padding: 6px 8px;">CAGR</th>
+                    <th class="text-right" style="width: 15%; font-size: 9px; padding: 6px 8px;">12 Months</th>
+                    <th class="text-right" style="width: 18%; font-size: 9px; padding: 6px 8px; background-color: rgba(159, 130, 82, 0.05); border-left: 1px solid var(--border-thin); border-right: 1px solid var(--border-thin);">18 Mo (Target)</th>
+                    <th class="text-right" style="width: 15%; font-size: 9px; padding: 6px 8px;">24 Months</th>
+                    <th class="text-right" style="width: 15%; font-size: 9px; padding: 6px 8px;">36 Months</th>
+                  </tr>
+                </thead>
+                <tbody class="font-numeric" style="font-size: 10.5px;">
+                  <tr>
+                    <td style="padding: 6px 8px;"><strong>Conservative</strong></td>
+                    <td class="text-right" style="padding: 6px 8px;">15.00%</td>
+                    <td class="text-right" style="padding: 6px 8px;">₹2.94 Cr<br><span style="font-size: 8.5px; color: var(--success);">+15.0%</span></td>
+                    <td class="text-right" style="padding: 6px 8px; background-color: rgba(159, 130, 82, 0.02); border-left: 1px solid var(--border-thin); border-right: 1px solid var(--border-thin); font-weight: 700;">₹3.16 Cr<br><span style="font-size: 8.5px; color: var(--success);">+23.3%</span></td>
+                    <td class="text-right" style="padding: 6px 8px;">₹3.38 Cr<br><span style="font-size: 8.5px; color: var(--success);">+32.3%</span></td>
+                    <td class="text-right" style="padding: 6px 8px;">₹3.88 Cr<br><span style="font-size: 8.5px; color: var(--success);">+52.1%</span></td>
+                  </tr>
+                  <tr class="deal-highlight-success">
+                    <td style="padding: 6px 8px; color: var(--success-dark) !important;"><strong>Base (Actual)</strong></td>
+                    <td class="text-right" style="padding: 6px 8px; color: var(--success-dark) !important;">33.87%</td>
+                    <td class="text-right" style="padding: 6px 8px; color: var(--success-dark) !important;">₹3.42 Cr<br><span style="font-size: 8.5px; color: var(--success-dark);">+33.9%</span></td>
+                    <td class="text-right" style="padding: 6px 8px; background-color: rgba(4, 120, 87, 0.08); border-left: 1px solid var(--border-thin); border-right: 1px solid var(--border-thin); font-weight: 800; color: var(--success-dark) !important;">₹3.85 Cr<br><span style="font-size: 8.5px; color: var(--success-dark);">+50.8%</span></td>
+                    <td class="text-right" style="padding: 6px 8px; color: var(--success-dark) !important;">₹4.58 Cr<br><span style="font-size: 8.5px; color: var(--success-dark);">+79.2%</span></td>
+                    <td class="text-right" style="padding: 6px 8px; color: var(--success-dark) !important;">₹6.12 Cr<br><span style="font-size: 8.5px; color: var(--success-dark);">+139.9%</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 6px 8px;"><strong>Optimistic</strong></td>
+                    <td class="text-right" style="padding: 6px 8px;">40.00%</td>
+                    <td class="text-right" style="padding: 6px 8px;">₹3.57 Cr<br><span style="font-size: 8.5px; color: var(--success);">+40.0%</span></td>
+                    <td class="text-right" style="padding: 6px 8px; background-color: rgba(159, 130, 82, 0.02); border-left: 1px solid var(--border-thin); border-right: 1px solid var(--border-thin); font-weight: 700;">₹4.25 Cr<br><span style="font-size: 8.5px; color: var(--success);">+65.8%</span></td>
+                    <td class="text-right" style="padding: 6px 8px;">₹5.00 Cr<br><span style="font-size: 8.5px; color: var(--success);">+96.0%</span></td>
+                    <td class="text-right" style="padding: 6px 8px;">₹7.01 Cr<br><span style="font-size: 8.5px; color: var(--success);">+174.4%</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- CAGR Escalation Thresholds details -->
+            <div style="margin-top: 8px; border-top: 1px dashed var(--border-thin); padding-top: 8px;">
+              <div style="font-size: 8.5px; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Scenario Mechanics</div>
+              <div style="display: grid; grid-template-columns: 1fr; gap: 4px; font-size: 11px; color: var(--text-muted);">
+                <div><strong>15.00% Conservative:</strong> Assumes simple indexation with no flyover re-rating.</div>
+                <div><strong>33.87% Base (Actual):</strong> Reflects immediate valuation boost post-flyover completion in late Q2 2026.</div>
+                <div><strong>40.00% Optimistic:</strong> Factors in rapid logistical development around NMRDA Outer Ring Road.</div>
               </div>
             </div>
             
-            <div class="news-timeline-item">
-              <div class="news-bullet"></div>
-              <div class="news-body">
-                <div class="news-header">
-                  <span class="news-subject">Besa Junction Flyover & Bypass Grading</span>
-                  <span class="news-date">2 Weeks Ago</span>
-                </div>
-                <div class="news-desc">NMRDA engineering contractors initiated grading and structural surveying for the planned 24-meter road overpass.</div>
+            <!-- Detailed ROI Analytics Commentary -->
+            <div style="margin-top: 10px; border-top: 1px dashed var(--border-thin); padding-top: 10px;">
+              <div style="font-size: 9px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px;">CAGR Compounding Mechanics &amp; Value Drivers</div>
+              <ul class="key-value-list" style="gap: 5px; font-size: 11px; list-style: none; padding: 0; margin: 0;">
+                <li style="display: flex; gap: 6px; align-items: flex-start; line-height: 1.45;">
+                  <span style="color: var(--secondary); font-weight: bold; font-size: 12px; line-height: 1;">&bull;</span>
+                  <span><strong>Compounding Horizon:</strong> Returns are calculated based on all-in deployed capital of <strong>₹2,55,30,000</strong> using compounding formula: <code>Value = Deployed Cost &times; (1 + CAGR)<sup>(Months/12)</sup></code>.</span>
+                </li>
+                <li style="display: flex; gap: 6px; align-items: flex-start; line-height: 1.45;">
+                  <span style="color: var(--secondary); font-weight: bold; font-size: 12px; line-height: 1;">&bull;</span>
+                  <span><strong>The 18-Month Target:</strong> Base Case projection achieves <strong>₹3,85,00,000</strong> exit value in Q2 2026, driven by NHAI elevated corridor opening and a 33.87% re-rating boost.</span>
+                </li>
+                <li style="display: flex; gap: 6px; align-items: flex-start; line-height: 1.45;">
+                  <span style="color: var(--secondary); font-weight: bold; font-size: 12px; line-height: 1;">&bull;</span>
+                  <span><strong>Extended Horizon (36 Mo):</strong> Holding for 3 years compounds base performance to <strong>₹6.12 Cr</strong> (+139.9% ROI), making the corridor a key candidate for corporate showroom leasing.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="disclaimer-box" style="margin-top: 8px;">
+              <strong>ReachX SLA Sec 3.8.1:</strong> Scenario ROI projections represent compounding growth rates.
+            </div>
+          </div>
+        </div>
+
+        <div class="flex-column">
+          <!-- Property Risk Matrix -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="alert-triangle"></i> Property Risk Matrix</div>
+            <div class="card-content-flow">
+              <div class="risk-bar-container">
+                <div class="risk-bar-label"><span>Over-pricing Risk</span><span style="color:var(--success); font-weight:600;">Low (25%)</span></div>
+                <div class="risk-bar-bg"><div class="risk-bar-fill" style="width: 25%; background-color: var(--success);"></div></div>
+              </div>
+              <div class="risk-bar-container">
+                <div class="risk-bar-label"><span>Regulatory / Title Risk</span><span style="color:var(--success); font-weight:600;">Very Low (10%)</span></div>
+                <div class="risk-bar-bg"><div class="risk-bar-fill" style="width: 10%; background-color: var(--success);"></div></div>
+              </div>
+              <div class="risk-bar-container">
+                <div class="risk-bar-label"><span>Infrastructure Delay (Metro Phase II)</span><span style="color:var(--warning); font-weight:600;">Medium (50%)</span></div>
+                <div class="risk-bar-bg"><div class="risk-bar-fill" style="width: 50%; background-color: var(--warning);"></div></div>
+              </div>
+              <div class="risk-bar-container">
+                <div class="risk-bar-label"><span>Exit Liquidity Risk</span><span style="color:var(--warning); font-weight:600;">Medium (40%)</span></div>
+                <div class="risk-bar-bg"><div class="risk-bar-fill" style="width: 40%; background-color: var(--warning);"></div></div>
+              </div>
+              <!-- Risk Mitigation block -->
+              <div style="margin-top: 6px; border-top: 1px dashed var(--border-thin); padding-top: 8px;">
+                <div style="font-size: 8.5px; font-weight: 700; color: var(--warning); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Risk Mitigation Protocols</div>
+                <ul style="padding-left: 12px; margin: 0; font-size: 11px; color: var(--text-muted); line-height: 1.45;">
+                  <li><strong>Target Bid:</strong> Restricting entry price to ₹5,500/Sq.Ft guards against down-cycles.</li>
+                  <li><strong>Delay Cushion:</strong> 18-month timeline accommodates regional transit infrastructure delays.</li>
+                  <li><strong>Exit Channels:</strong> Marketing commercial spaces to corporate and retail tenants to de-risk sale timing.</li>
+                </ul>
+              </div>
+              <div class="disclaimer-box" style="margin-top: 8px;">
+                <strong>ReachX SLA Sec 3.2:</strong> Risk profiles are manual estimates based on static characteristics.
               </div>
             </div>
+          </div>
+        </div>
+      </section>
 
-            <div class="news-timeline-item">
-              <div class="news-bullet"></div>
-              <div class="news-body">
-                <div class="news-header">
-                  <span class="news-subject">MIHAN Tech Park III Structural Completion</span>
-                  <span class="news-date">3 Weeks Ago</span>
+      <!-- SECTION 4: ACQUISITION JOURNEY & TECHNICAL SPECS -->
+      <section class="section-row">
+        <div class="flex-column">
+          <!-- Urban Vault Stages & Benefits Timeline -->
+          <div class="card highlighted-border">
+            <div class="card-title"><i data-lucide="shield-check"></i> Urban Vault Acquisition Stages &amp; Timeline Benefits</div>
+            <div class="news-timeline stage-timeline" style="margin-top: 10px;">
+              <div class="news-timeline-item">
+                <div class="stage-number completed">1</div>
+                <div class="news-body">
+                  <div class="news-header">
+                    <span class="news-subject">Stage 1: Discovery &amp; Title Diligence (Day 1 - 7)</span>
+                    <span class="badge badge-success">Completed</span>
+                  </div>
+                  <div class="news-desc" style="line-height: 1.45;">
+                    <strong>Other Platforms:</strong> Self-managed legal title search, manual zoning checks. High risk of zoning clash.<br>
+                    <strong>Urban Vault Benefit:</strong> Full 12-Year registry Mutational Title Audit and NMRDA zoning layout checks included.
+                  </div>
                 </div>
-                <div class="news-desc">Structural framing is fully complete. Facility manager reports plans for internal architectural fit-outs starting early next quarter.</div>
+              </div>
+              <div class="news-timeline-item">
+                <div class="stage-number completed">2</div>
+                <div class="news-body">
+                  <div class="news-header">
+                    <span class="news-subject">Stage 2: Target Bid Negotiation &amp; Closing (Day 8 - 15)</span>
+                    <span class="badge badge-success">Completed</span>
+                  </div>
+                  <div class="news-desc" style="line-height: 1.45;">
+                    <strong>Other Platforms:</strong> Variable commission rates (2% to 3%), no bid positioning data support.<br>
+                    <strong>Urban Vault Benefit:</strong> Flat 1% platform fee, saved ₹17.00 Lakhs (&minus;6.7% off ask) via structured bid positioning.
+                  </div>
+                </div>
+              </div>
+              <div class="news-timeline-item">
+                <div class="stage-number completed">3</div>
+                <div class="news-body">
+                  <div class="news-header">
+                    <span class="news-subject">Stage 3: Sub-Registrar Filing &amp; Mutation (Day 16 - 30)</span>
+                    <span class="badge badge-success">Completed</span>
+                  </div>
+                  <div class="news-desc" style="line-height: 1.45;">
+                    <strong>Other Platforms:</strong> Slow government registration liaison, long waits for Satbara mutation records.<br>
+                    <strong>Urban Vault Benefit:</strong> Secure sub-registrar filing management, RERA certification check, layout approval tracking.
+                  </div>
+                </div>
+              </div>
+              <div class="news-timeline-item">
+                <div class="stage-number active">4</div>
+                <div class="news-body">
+                  <div class="news-header">
+                    <span class="news-subject">Stage 4: Post-Purchase Hold &amp; Monitoring (Month 1 - 18)</span>
+                    <span class="badge badge-accent">Active Monitoring</span>
+                  </div>
+                  <div class="news-desc" style="line-height: 1.45;">
+                    <strong>Other Platforms:</strong> Zero post-transaction tracking. Risk of local encroachment and delays.<br>
+                    <strong>Urban Vault Benefit:</strong> Continuous geofenced radius landmark mapping and live infrastructure milestone auditing.
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-      </div>
-
-      <!-- Secondary Column (Right) -->
-      <div class="flex-column">
-        
-        <!-- Media & Map Cards -->
-        <div class="card">
-          <div class="card-title"><i data-lucide="image"></i> Verified Property & Construction Gallery</div>
-          
-          <!-- Image grid -->
-          <div class="visual-grid">
-            <div class="visual-item-card">
-              <img src="./besa_plot_site.png" class="visual-media" alt="Besa Plot Site">
-              <div class="visual-caption"><strong>Besa Plot Site:</strong> Vacant commercial plot #204 boundary view.</div>
+        <div class="flex-column">
+          <!-- Property Specifications -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="info"></i> Property Specifications</div>
+            <div class="key-value-list">
+              <div class="key-value-row"><span class="key-label">Asset Class</span><span class="key-val">Commercial Plot</span></div>
+              <div class="key-value-row"><span class="key-label">Zoning Code</span><span class="key-val">NA Certified Commercial</span></div>
+              <div class="key-value-row"><span class="key-label">Plot Size</span><span class="key-val font-numeric">3,600 Sq.Ft</span></div>
+              <div class="key-value-row"><span class="key-label">Circle Rate</span><span class="key-val font-numeric">₹4,200 / Sq.Ft</span></div>
+              <div class="key-value-row"><span class="key-label">Base Purchase Rate</span><span class="key-val font-numeric">₹6,528 / Sq.Ft</span></div>
+              <div class="key-value-row"><span class="key-label">Taxes &amp; Transaction ratio</span><span class="key-val font-numeric">9.14% of Purchase</span></div>
+              <div class="key-value-row"><span class="key-label">Layout Sanction</span><span class="key-val">NMRDA Layout Approved</span></div>
             </div>
-            <div class="visual-item-card">
-              <img src="./nagpur_metro_construction.png" class="visual-media" alt="Nagpur Metro Construction">
-              <div class="visual-caption"><strong>Metro Phase II:</strong> Elevated concrete pillar frames 2km west.</div>
+            <!-- Zoning & FSI Parameters -->
+            <div style="margin-top: 8px; border-top: 1px dashed var(--border-thin); padding-top: 8px;">
+              <div style="font-size: 8.5px; font-weight: 700; color: var(--secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Zoning &amp; FSI Parameters</div>
+              <div style="display: grid; grid-template-columns: 1fr; gap: 4px; font-size: 11px; color: var(--text-muted);">
+                <div><strong>Permissible FSI:</strong> 1.50 (Standard Commercial FSI for Kamthi jurisdiction).</div>
+                <div><strong>Road Width Modifier:</strong> +0.25 FSI bonus applicable due to road touch touch-point width exceeding 12m.</div>
+                <div><strong>Usability:</strong> Approved for multi-level retail showrooms or corporate offices.</div>
+              </div>
             </div>
           </div>
 
-          <!-- GPS Coordinates -->
-          <div class="gps-coordinate-strip">
-            <span>Coordinates</span>
-            <span>21°06'20.2"N &nbsp; 79°08'36.7"E</span>
+          <!-- Due Diligence Checklist -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="shield-check"></i> Due Diligence Checklist</div>
+            <div class="card-content-flow">
+              <div class="key-value-list">
+                <div class="checklist-item">
+                  <span class="chk-lbl"><i data-lucide="check-circle" class="success"></i> RERA Registration</span>
+                  <span class="badge badge-success">Verified &bull; P5050000XXXX</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="chk-lbl"><i data-lucide="check-circle" class="success"></i> 7/12 Satbara Extract</span>
+                  <span class="badge badge-success">Clear &bull; NA Commercial</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="chk-lbl"><i data-lucide="check-circle" class="success"></i> NMRDA Layout Sanction</span>
+                  <span class="badge badge-success">Approved &bull; Plot #204</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="chk-lbl"><i data-lucide="check-circle" class="success"></i> NHAI Setback Compliance</span>
+                  <span class="badge badge-success">24m Road Width Met</span>
+                </div>
+                <div class="checklist-item">
+                  <span class="chk-lbl"><i data-lucide="check-circle" class="success"></i> Title Search (12 Years)</span>
+                  <span class="badge badge-success">Clear &bull; No Encumbrance</span>
+                </div>
+              </div>
+              <!-- Legal Compliance Status Audit -->
+              <div style="margin-top: 8px; border-top: 1px dashed var(--border-thin); padding-top: 8px;">
+                <div style="font-size: 8.5px; font-weight: 700; color: var(--success); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px;">Legal Compliance Status Audit</div>
+                <p style="font-size: 11px; color: var(--text-muted); line-height: 1.4; margin: 0;">
+                  All property deeds have been verified for a continuous 12-year window. Satbara mutation entry confirmed clear of mortgage, lien, or third-party encumbrance under Kamthi regional sub-registrar records.
+                </p>
+              </div>
+              <div class="disclaimer-box" style="margin-top: 8px;">
+                <strong>ReachX SLA Sec 4.1.7:</strong> Compliance tracked via manual property underwriting.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 5: LOCATION & VISUAL INTELLIGENCE -->
+      <section class="section-row">
+        <div class="flex-column">
+          <!-- Geofence Landmarks -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="map-pin"></i> Geofence Radius Landmarks</div>
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 45%;">Landmark Node</th>
+                    <th style="width: 25%;">Category</th>
+                    <th class="text-right" style="width: 15%;">Distance</th>
+                    <th class="text-right" style="width: 15%;">Drive Time</th>
+                  </tr>
+                </thead>
+                <tbody class="font-numeric">
+                  <tr>
+                    <td>Dr. Babasaheb Ambedkar Intl Airport</td>
+                    <td class="nowrap">Transit Node</td>
+                    <td class="text-right nowrap">4.8 km</td>
+                    <td class="text-right nowrap">12 Mins</td>
+                  </tr>
+                  <tr>
+                    <td>MIHAN SEZ Commercial Entry</td>
+                    <td class="nowrap">Employment Hub</td>
+                    <td class="text-right nowrap">8.0 km</td>
+                    <td class="text-right nowrap">15 Mins</td>
+                  </tr>
+                  <tr>
+                    <td>Nagpur Metro Phase II Station (Besa)</td>
+                    <td class="nowrap">Transit Node</td>
+                    <td class="text-right nowrap">2.0 km</td>
+                    <td class="text-right nowrap">5 Mins</td>
+                  </tr>
+                  <tr>
+                    <td>Manish Nagar Commercial Spine</td>
+                    <td class="nowrap">Retail District</td>
+                    <td class="text-right nowrap">2.1 km</td>
+                    <td class="text-right nowrap">6 Mins</td>
+                  </tr>
+                  <tr>
+                    <td>Wardha Road Expressway Link</td>
+                    <td class="nowrap">Highway Node</td>
+                    <td class="text-right nowrap">4.1 km</td>
+                    <td class="text-right nowrap">8 Mins</td>
+                  </tr>
+                  <tr>
+                    <td>Nagpur Central Railway Junction</td>
+                    <td class="nowrap">Railways</td>
+                    <td class="text-right nowrap">10.0 km</td>
+                    <td class="text-right nowrap">25 Mins</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        <!-- Property Specifications -->
-        <div class="card">
-          <div class="card-title"><i data-lucide="building-2"></i> Asset Specifications</div>
-          <div class="key-value-list" style="font-size:11px;">
-            <div class="key-value-row"><span class="key-label">Asset Class</span><span class="key-val">Commercial Plot</span></div>
-            <div class="key-value-row"><span class="key-label">Zoning Code</span><span class="key-val">NA Certified Commercial</span></div>
-            <div class="key-value-row"><span class="key-label">Plot Size</span><span class="key-val font-numeric">3,600 Sq.Ft</span></div>
-            <div class="key-value-row"><span class="key-label">Government Circle Rate</span><span class="key-val font-numeric">₹4,200 / Sq.Ft</span></div>
-            <div class="key-value-row"><span class="key-label">Base Purchase Rate</span><span class="key-val font-numeric">₹6,528 / Sq.Ft</span></div>
-            <div class="key-value-row"><span class="key-label">Transaction Costs Ratio</span><span class="key-val font-numeric">9.14% of Purchase</span></div>
-            <div class="key-value-row"><span class="key-label">Layout Sanction</span><span class="key-val">NMRDA Layout Approved</span></div>
+        <div class="flex-column">
+          <!-- Property Verification Gallery -->
+          <div class="card">
+            <div class="card-title"><i data-lucide="image"></i> Property Verification Gallery</div>
+            <div class="visual-grid">
+              <div class="visual-item-card">
+                <img src="./besa_plot_site.png" class="visual-media" alt="Besa Plot Site">
+                <div class="visual-caption"><strong>Besa Plot Site:</strong> Vacant commercial plot #204.</div>
+              </div>
+              <div class="visual-item-card">
+                <img src="./nagpur_metro_construction.png" class="visual-media" alt="Nagpur Metro Construction">
+                <div class="visual-caption"><strong>Metro Phase II:</strong> elevated pillar structures nearby.</div>
+              </div>
+            </div>
+            <div class="gps-coordinate-strip">
+              <span class="nowrap">Coordinates Node</span>
+              <span class="nowrap" style="color: #ffffff;">21°06'20.2"N &nbsp; 79°08'36.7"E</span>
+            </div>
           </div>
         </div>
+      </section>
 
-      </div>
+      <!-- SECTION 6: LOCAL INFRASTRUCTURE Milestones -->
+      <section style="display: flex; flex-direction: column; width: 100%; margin-top: 4px;">
+        <!-- Infrastructure Milestones -->
+        <div class="card" style="width: 100%;">
+          <div class="card-title"><i data-lucide="activity"></i> Local Infrastructure Milestones</div>
+          <div class="milestones-grid">
+            
+            <!-- Milestone 1 -->
+            <div class="milestone-box">
+              <div class="milestone-top">
+                <span class="milestone-title">Metro Line 2 Elevated Viaduct Pillar Casting</span>
+                <span class="badge badge-warning" style="flex-shrink: 0;">10 Days Ago</span>
+              </div>
+              <div class="milestone-meta-row">
+                <div>Agency: <strong style="color: var(--primary);">Maha Metro (Phase II)</strong></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+                  <span>Status: <strong>15% Casting active</strong></span>
+                  <span class="badge badge-warning" style="font-size: 7.5px; padding: 1px 4px;">Active</span>
+                </div>
+                <div class="risk-bar-bg" style="margin-top: 4px;"><div class="risk-bar-fill" style="width: 15%; background-color: var(--warning);"></div></div>
+              </div>
+              <p class="milestone-desc">Maha Metro commenced concrete casting for elevated viaduct pillars along Besa corridor road. Segmental girder launching scheduled for late Q3 2026.</p>
+            </div>
+
+            <!-- Milestone 2 -->
+            <div class="milestone-box">
+              <div class="milestone-top">
+                <span class="milestone-title">Besa Junction Flyover &amp; Bypass Grading</span>
+                <span class="badge badge-info" style="flex-shrink: 0;">2 Weeks Ago</span>
+              </div>
+              <div class="milestone-meta-row">
+                <div>Agency: <strong style="color: var(--primary);">NMRDA Infrastructure</strong></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+                  <span>Status: <strong>5% Surveying active</strong></span>
+                  <span class="badge badge-info" style="font-size: 7.5px; padding: 1px 4px;">Active</span>
+                </div>
+                <div class="risk-bar-bg" style="margin-top: 4px;"><div class="risk-bar-fill" style="width: 5%; background-color: var(--info);"></div></div>
+              </div>
+              <p class="milestone-desc">NMRDA contractors initiated structural surveying and grading for the 24m overpass over Besa tri-junction, routing transit freight traffic away from commercial interiors.</p>
+            </div>
+
+            <!-- Milestone 3 -->
+            <div class="milestone-box">
+              <div class="milestone-top">
+                <span class="milestone-title">MIHAN Tech Park III Structural Completion</span>
+                <span class="badge badge-success" style="flex-shrink: 0;">3 Weeks Ago</span>
+              </div>
+              <div class="milestone-meta-row">
+                <div>Agency: <strong style="color: var(--primary);">MIHAN SEZ Dev Board</strong></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2px;">
+                  <span>Status: <strong>100% Structural done</strong></span>
+                  <span class="badge badge-success" style="font-size: 7.5px; padding: 1px 4px;">Completed</span>
+                </div>
+                <div class="risk-bar-bg" style="margin-top: 4px;"><div class="risk-bar-fill" style="width: 100%; background-color: var(--success);"></div></div>
+              </div>
+              <p class="milestone-desc">Structural framing of 1.8M Sq.Ft IT park is fully completed. Letters of intent have been secured from major software anchors, driving rental yields.</p>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
     </main>
 
-    <!-- 4. Acquisition Costs & ROI Calculation Formula (Split Box) -->
-    <section class="card">
-      <div class="card-title"><i data-lucide="calculator"></i> All-In Acquisition Cost Breakdown</div>
-      <div class="grid-left-heavy">
-        
-        <!-- Itemized Acquisition Table -->
-        <div class="table-container">
-          <table>
-            <thead>
-              <tr>
-                <th>Cost Component description</th>
-                <th class="text-right">Factor Rate</th>
-                <th class="text-right">Calculated Outflow</th>
-                <th class="text-right">Capital Classification</th>
-              </tr>
-            </thead>
-            <tbody class="font-numeric">
-              <tr>
-                <td>Agreement Value (Base Land Cost)</td>
-                <td class="text-right">&mdash;</td>
-                <td class="text-right">₹2,35,00,000</td>
-                <td class="text-right">Primary Asset Value</td>
-              </tr>
-              <tr>
-                <td>Stamp Duty Charges</td>
-                <td class="text-right">6.00%</td>
-                <td class="text-right">₹14,10,000</td>
-                <td class="text-right">Statutory Acquisition Cost</td>
-              </tr>
-              <tr>
-                <td>Government Registration Fees</td>
-                <td class="text-right">1.00%</td>
-                <td class="text-right">₹2,35,000</td>
-                <td class="text-right">Statutory Acquisition Cost</td>
-              </tr>
-              <tr>
-                <td>Urban Vault Facilitation & Service Fee</td>
-                <td class="text-right">1.50%</td>
-                <td class="text-right">₹3,52,500</td>
-                <td class="text-right">Platform Transaction Charges</td>
-              </tr>
-              <tr>
-                <td>Legal Diligence, Verification & Title Search</td>
-                <td class="text-right">Fixed</td>
-                <td class="text-right">₹1,50,000</td>
-                <td class="text-right">Platform Transaction Charges</td>
-              </tr>
-              <tr class="summary-row">
-                <td colspan="2">Total All-In Acquisition Cost</td>
-                <td class="text-right">₹2,56,47,500</td>
-                <td class="text-right">Total Deployed Capital</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Formula derivation -->
-        <div class="math-formula-card">
-          <div class="ribbon-label"><i data-lucide="variable"></i> Returns Derivation Formula</div>
-          <div class="math-expr">
-            ROI = (Resale Value &minus; All-In Cost) / All-In Cost &times; 100
-          </div>
-          <div class="key-value-list" style="width:100%; font-size:10.5px;">
-            <div class="key-value-row"><span class="key-label">All-In Acquisition Cost (A)</span><span class="key-val font-numeric">₹2,56,47,500</span></div>
-            <div class="key-value-row"><span class="key-label">Resale / Exit Transaction (B)</span><span class="key-val font-numeric">₹3,85,00,000</span></div>
-            <div class="key-value-row"><span class="key-label">Net Capital Appreciation (B - A)</span><span class="key-val font-numeric" style="color:var(--success);">₹1,28,52,500</span></div>
-            <div class="key-value-row"><span class="key-label">Annualized Return Rate</span><span class="key-val font-numeric" style="color:var(--accent);">33.41% / yr</span></div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- 5. Acquisition Payment Ledger (Actual Cash Flow Entries) -->
-    <section class="card">
-      <div class="card-title"><i data-lucide="receipt"></i> Transaction & Payment Ledger</div>
-      <div class="table-container" style="max-height: 175px; overflow-y: auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>Payment Date</th>
-              <th>Transaction Reference ID</th>
-              <th>Payment Stage</th>
-              <th>Destination Entity</th>
-              <th class="text-right">Amount Outflow</th>
-              <th>Payment Status</th>
-            </tr>
-          </thead>
-          <tbody class="font-numeric" style="font-size:10px;">
-            <tr>
-              <td>15-Jan-2025</td>
-              <td>TXN-PROP-001</td>
-              <td>Token / Booking Capital Deployed</td>
-              <td>Siddharth Builders Escrow</td>
-              <td class="text-right">₹5,00,000</td>
-              <td><span class="badge badge-success">Cleared</span></td>
-            </tr>
-            <tr>
-              <td>20-Jan-2025</td>
-              <td>TXN-STAMP-002</td>
-              <td>Stamp Duty & Registration Outflow</td>
-              <td>IGR Maharashtra Portal</td>
-              <td class="text-right">₹16,45,000</td>
-              <td><span class="badge badge-success">Cleared</span></td>
-            </tr>
-            <tr>
-              <td>10-Feb-2025</td>
-              <td>TXN-PROP-003</td>
-              <td>First Capital Installment</td>
-              <td>Siddharth Builders Escrow</td>
-              <td class="text-right">₹1,00,00,000</td>
-              <td><span class="badge badge-success">Cleared</span></td>
-            </tr>
-            <tr>
-              <td>15-Feb-2025</td>
-              <td>TXN-SERV-004</td>
-              <td>Diligence & Service Fee Charges</td>
-              <td>Urban Vault Core Accounts</td>
-              <td class="text-right">₹5,02,500</td>
-              <td><span class="badge badge-success">Cleared</span></td>
-            </tr>
-            <tr>
-              <td>12-Mar-2025</td>
-              <td>TXN-PROP-005</td>
-              <td>Agreement Balance Settlement</td>
-              <td>Siddharth Builders Escrow</td>
-              <td class="text-right">₹1,30,00,000</td>
-              <td><span class="badge badge-success">Cleared</span></td>
-            </tr>
-            <tr class="summary-row">
-              <td colspan="4">Cumulative Transaction Outflows</td>
-              <td class="text-right">₹2,56,47,500</td>
-              <td>Verified Cleared</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- 6. Charts Grid -->
-    <div class="charts-grid">
-      <div class="card">
-        <div class="card-title"><i data-lucide="pie-chart"></i> Acquisition Cost Allocation Structure</div>
-        <div class="chart-wrapper">
-          <canvas id="costBreakdownChart"></canvas>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-title"><i data-lucide="bar-chart-3"></i> Capital Performance: Cost vs Resale Value (₹ Cr)</div>
-        <div class="chart-wrapper">
-          <canvas id="dealPerformanceChart"></canvas>
-        </div>
-      </div>
-    </div>
-
-    <!-- 7. Unified Audit Stamp & Disclaimer Footer -->
-    <footer class="audit-footer">
+    <!-- 10. Unified Audit Stamp & Disclaimer Footer -->
+    <div class="audit-statement-card">
       <div class="audit-top">
-        <span class="audit-stamp">Verification Audit Ledger</span>
-        <span style="font-family: var(--font-mono); font-size: 8px; color: var(--text-light);">System Node Reference: UV-PROP-VERIFY-06072026</span>
+        <span class="audit-stamp"><i data-lucide="award"></i> Verification Audit Ledger</span>
+        <span style="font-family: var(--font-mono); font-size: 9.5px; color: var(--text-light);">Reference Code: UV-PROP-VERIFY-06072026</span>
       </div>
       <p class="audit-text">
-        <strong>Factual Ledger Registry Statement:</strong> This Property Purchase & Return Ledger is compiled solely from chronological acquisition transactions recorded within the Urban Vault Professional Edition platform. Urban Vault lists properties which investors can purchase, or which investors list to sell/buy through our network for other investors. Once a transaction is closed, investors exit or manage the asset on their own terms. This ledger does not track quarterly dividend payouts or ongoing property management allocations.
+        <strong>Factual Ledger Registry Statement:</strong> This Property Purchase &amp; Return Ledger is compiled solely from chronological acquisition transactions recorded within the Urban Vault Professional Edition platform. Urban Vault lists properties which investors can purchase, or which investors list to sell/buy through our network for other investors. Once a transaction is closed, investors exit or manage the asset on their own terms. This ledger does not track quarterly dividend payouts or ongoing property management allocations.
       </p>
-      <p class="audit-text" style="opacity: 0.75; font-size: 9px; border-top: 1px dashed var(--border); padding-top: 6px;">
+      <p class="audit-text" style="opacity: 0.5; font-size: 8px; border-top: 1px dashed var(--border-thin); padding-top: 6px;">
         Informational ledger report only. Past transaction histories are not predictive of future real estate performance. All administrative checklists are verified against regional records under municipal jurisdictions.
       </p>
+    </div>
+
+    <!-- Footnote -->
+    <footer class="report-footer">
+      <span>Registry Reference Node: UV-PROP-VERIFY-06072026</span>
+      <span>URBAN VAULT PRIVATE CLIENT GROUP</span>
     </footer>
 
   </div>
 
   <!-- Lucide & Chart.js Configurations -->
   <script>
+    // Initialize Lucide Icons
     lucide.createIcons();
 
     // Chart.js style templates
-    Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+    Chart.defaults.font.family = "'Outfit', sans-serif";
     Chart.defaults.font.size = 8.5;
     Chart.defaults.color = "#475569";
-    Chart.defaults.scale.grid.color = "#EAE5DA";
+    Chart.defaults.scale.grid.color = "rgba(15, 23, 42, 0.05)";
     Chart.defaults.scale.grid.lineWidth = 0.5;
 
     // Cost Breakdown Doughnut Chart
@@ -954,12 +2061,12 @@
     new Chart(ctx1, {
       type: 'doughnut',
       data: {
-        labels: ['Land Value', 'Stamp Duty', 'Registration', 'Brokerage', 'Legal/Search'],
+        labels: ['Land', 'Stamp Duty', 'Registration', 'Platform Fee', 'Legal'],
         datasets: [{
-          data: [91.6, 5.5, 0.9, 1.4, 0.6],
-          backgroundColor: ['#061D19', '#A68B5E', '#C8B99E', '#EAE5DA', '#475569'],
-          borderWidth: 1,
-          borderColor: '#FFFFFF'
+          data: [92.1, 5.5, 0.9, 0.9, 0.6],
+          backgroundColor: ['#b0956b', '#0f172a', '#64748b', '#047857', '#cbd5e1'],
+          borderWidth: 1.5,
+          borderColor: '#ffffff'
         }]
       },
       options: {
@@ -970,7 +2077,9 @@
             position: 'right',
             labels: {
               boxWidth: 8,
-              font: { size: 8 }
+              padding: 4,
+              font: { size: 8, weight: '500' },
+              color: '#475569'
             }
           }
         }
@@ -987,23 +2096,27 @@
           {
             label: 'Base Land Cost',
             data: [2.35, 2.35],
-            backgroundColor: '#061D19',
+            backgroundColor: '#0f172a',
+            borderColor: 'rgba(15, 23, 42, 0.1)',
+            borderWidth: 0.5,
             borderRadius: 2,
-            barThickness: 28
+            barThickness: 24
           },
           {
-            label: 'Acquisition Taxes & Fees',
-            data: [0.21, 0.21],
-            backgroundColor: '#C8B99E',
+            label: 'Taxes & Fees',
+            data: [0.20, 0.20],
+            backgroundColor: '#b0956b',
+            borderColor: 'rgba(15, 23, 42, 0.1)',
+            borderWidth: 0.5,
             borderRadius: 2,
-            barThickness: 28
+            barThickness: 24
           },
           {
             label: 'Net Capital Gain',
-            data: [0, 1.28],
-            backgroundColor: '#A68B5E',
+            data: [0, 1.30],
+            backgroundColor: '#047857',
             borderRadius: 2,
-            barThickness: 28
+            barThickness: 24
           }
         ]
       },
@@ -1016,14 +2129,19 @@
             position: 'bottom',
             labels: {
               boxWidth: 8,
-              padding: 6,
-              font: { size: 7.5 }
+              padding: 4,
+              font: { size: 8, weight: '500' },
+              color: '#475569'
             }
           }
         },
         scales: {
           x: {
-            stacked: true
+            stacked: true,
+            ticks: {
+              color: '#0f172a',
+              font: { weight: '600' }
+            }
           },
           y: {
             stacked: true,
@@ -1031,6 +2149,7 @@
             max: 5,
             ticks: {
               stepSize: 1,
+              color: '#475569',
               callback: function(value) { return '₹' + value + ' Cr'; }
             }
           }
